@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HSK 4 Mocktest · H41327</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#12243a;
+  --ink-2:#3b4a5f;
+  --muted:#6a7788;
+  --bg:#edf1f0;
+  --paper:#ffffff;
+  --line:#d3dcd9;
+  --jade:#0f7b5f;
+  --jade-d:#0a5a45;
+  --jade-l:#dcf1e9;
+  --jade-b:#58d3a8;
+  --amber:#a85f00;
+  --amber-l:#fff0d3;
+  --red:#b3261e;
+  --red-l:#fbe2df;
+  --ui:"Public Sans",system-ui,-apple-system,"Segoe UI","Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  --zh:"Noto Serif SC","Songti SC","STSong","SimSun","Noto Serif CJK SC",serif;
+  --xh-h:72px;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--ui);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+[lang="zh"],.zh{font-family:var(--zh)}
+h1,h2,h3,p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--jade-b);outline-offset:2px}
+.screen{display:none;min-height:100vh}
+.screen.active{display:block}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;border:1.5px solid var(--line);background:var(--paper);padding:.65rem 1.1rem;border-radius:8px;font-weight:600;transition:background .15s,border-color .15s,transform .05s}
+.btn:hover{border-color:var(--ink-2)}
+.btn:active{transform:translateY(1px)}
+.btn[disabled]{opacity:.45;cursor:not-allowed;transform:none}
+.btn-primary{background:var(--jade);border-color:var(--jade);color:#fff}
+.btn-primary:hover{background:var(--jade-d);border-color:var(--jade-d)}
+.btn-danger{background:var(--red);border-color:var(--red);color:#fff}
+.btn-danger:hover{background:#8f1d17;border-color:#8f1d17}
+.btn-ghost{background:transparent}
+.btn-lg{padding:.9rem 1.6rem;font-size:1.05rem;border-radius:10px}
+.btn-sm{padding:.35rem .75rem;font-size:.88rem;border-radius:6px}
+
+/* ---------- shared form bits ---------- */
+label.field{display:block;font-weight:600;margin-bottom:1.1rem}
+label.field span{display:block;margin-bottom:.35rem;font-size:.92rem;color:var(--ink-2)}
+input[type=text],input[type=date],textarea{width:100%;padding:.75rem .9rem;border:1.5px solid var(--line);border-radius:8px;background:#fff;font:inherit;color:var(--ink)}
+input:focus,textarea:focus{outline:none;border-color:var(--jade);box-shadow:0 0 0 3px var(--jade-l)}
+
+/* ---------- login ---------- */
+.login{display:grid;grid-template-columns:minmax(300px,5fr) 6fr;min-height:100vh}
+.login-hero{background:var(--ink);color:#e8f0ef;padding:3rem 3rem 2.5rem;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+.login-hero .glyph{font-family:var(--zh);font-weight:700;font-size:clamp(6rem,11vw,10rem);line-height:1;white-space:nowrap;color:transparent;-webkit-text-stroke:2px var(--jade-b);letter-spacing:-.02em;margin-left:-.4rem}
+.login-hero h1{font-size:1.5rem;font-weight:700;margin-top:1.5rem}
+.login-hero .code{color:var(--jade-b);font-weight:600;margin-top:.2rem}
+.format{list-style:none;padding:0;margin:2rem 0 0;display:grid;gap:.5rem}
+.format li{display:flex;justify-content:space-between;gap:1rem;padding:.55rem 0;border-top:1px solid rgba(255,255,255,.14);font-size:.95rem}
+.format li b{font-weight:600}
+.login-form-wrap{display:flex;align-items:center;justify-content:center;padding:2rem}
+.login-form{width:100%;max-width:420px}
+.login-form h2{font-size:1.6rem;margin-bottom:.4rem}
+.login-form .sub{color:var(--muted);margin-bottom:1.8rem}
+.resume{background:var(--amber-l);border:1.5px solid #e9c37a;border-radius:10px;padding:1rem 1.1rem;margin-bottom:1.5rem}
+.resume p{margin-bottom:.7rem;font-size:.95rem}
+.resume .row{display:flex;gap:.6rem;flex-wrap:wrap}
+
+/* ---------- centered card screens ---------- */
+.center{display:flex;align-items:flex-start;justify-content:center;padding:2.5rem 1.2rem}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:2rem;width:100%;max-width:720px}
+.panel h2{font-size:1.5rem;margin-bottom:.3rem}
+.panel .sub{color:var(--muted);margin-bottom:1.6rem}
+.step{border:1.5px solid var(--line);border-radius:12px;padding:1.2rem 1.3rem;margin-bottom:1rem;display:grid;grid-template-columns:auto 1fr;gap:.2rem 1rem;align-items:start}
+.step.ok{border-color:var(--jade);background:#f4fbf8}
+.step .badge{grid-row:span 3;width:34px;height:34px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-weight:700}
+.step.ok .badge{background:var(--jade)}
+.step h3{font-size:1.05rem}
+.step p{color:var(--ink-2);font-size:.93rem}
+.step .controls{margin-top:.7rem;display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
+.step .msg{font-size:.9rem;font-weight:600}
+.msg.good{color:var(--jade-d)} .msg.bad{color:var(--red)}
+.kb-input{font-family:var(--zh);font-size:1.3rem}
+.checks{list-style:none;padding:0;margin:0 0 1.5rem;display:grid;gap:.6rem}
+.checks label{display:grid;grid-template-columns:auto 1fr;gap:.8rem;align-items:start;border:1.5px solid var(--line);border-radius:10px;padding:.85rem 1rem;cursor:pointer;transition:border-color .15s,background .15s}
+.checks label:has(input:checked){border-color:var(--jade);background:#f4fbf8}
+.checks input{width:20px;height:20px;margin-top:.15rem;accent-color:var(--jade)}
+.overview{width:100%;border-collapse:collapse;margin-bottom:1.5rem;font-size:.95rem}
+.overview th,.overview td{padding:.55rem .6rem;border-bottom:1px solid var(--line);text-align:left}
+.overview th{font-weight:600;color:var(--ink-2)}
+.actions{display:flex;gap:.7rem;justify-content:space-between;flex-wrap:wrap;margin-top:1.4rem}
+
+/* ---------- exam shell ---------- */
+.xh{position:sticky;top:0;z-index:30;background:var(--ink);color:#fff;box-shadow:0 2px 12px rgba(0,0,0,.18)}
+.xh-row{display:flex;align-items:center;gap:1rem;padding:.7rem 1.2rem;max-width:1240px;margin:0 auto}
+.xh-id{display:flex;flex-direction:column;min-width:0;line-height:1.25}
+.xh-id strong{font-size:1.05rem}
+.xh-id span{font-size:.82rem;color:#aebfcc;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px}
+.xh-steps{list-style:none;display:flex;gap:.4rem;margin:0 auto;padding:0}
+.xh-steps li{padding:.35rem .85rem;border-radius:999px;font-size:.88rem;font-weight:600;color:#8fa3b4;border:1.5px solid transparent}
+.xh-steps li.current{background:var(--jade);color:#fff}
+.xh-steps li.done{color:var(--jade-b);border-color:rgba(88,211,168,.35)}
+.xh-timer{margin-left:auto;font-variant-numeric:tabular-nums;font-weight:700;font-size:1.65rem;letter-spacing:.02em;padding:.15rem .8rem;border-radius:8px;background:rgba(255,255,255,.08)}
+.xh-timer.warn{background:var(--amber-l);color:var(--amber)}
+.xh-timer.crit{background:var(--red);color:#fff;animation:pulse 1s steps(2,end) infinite}
+@keyframes pulse{50%{opacity:.65}}
+.audiobar{background:#0d1b2d;border-top:1px solid rgba(255,255,255,.1)}
+.audiobar .in{max-width:1240px;margin:0 auto;padding:.5rem 1.2rem;display:flex;align-items:center;gap:.4rem 1rem;font-size:.9rem;flex-wrap:wrap}
+.audiobar .bar{flex:1;min-width:140px;height:8px;background:rgba(255,255,255,.14);border-radius:99px;overflow:hidden}
+.audiobar .bar i{display:block;height:100%;width:0;background:var(--jade-b);transition:width .4s linear}
+.audiobar .time{font-variant-numeric:tabular-nums;color:#aebfcc;min-width:6.5em;text-align:right}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--jade-b);margin-right:.5rem;animation:pulse 1.2s ease-in-out infinite}
+.dot.off{background:#7d8fa0;animation:none}
+
+.xbody{max-width:1240px;margin:0 auto;padding:1.5rem 1.2rem 4rem;display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:1.6rem;align-items:start}
+.aside{position:sticky;top:calc(var(--xh-h) + 14px);background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:1rem}
+.aside summary{display:none;font-weight:700;cursor:pointer}
+.aside h3{font-size:.95rem;margin-bottom:.6rem}
+.nv-group{margin-bottom:.9rem}
+.nv-group p{font-size:.8rem;color:var(--muted);margin-bottom:.35rem}
+.nv-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
+.nv{height:36px;border:1.5px solid var(--line);background:#fff;border-radius:7px;font-weight:600;font-size:.88rem;font-variant-numeric:tabular-nums}
+.nv:hover{border-color:var(--ink-2)}
+.nv.done{background:var(--jade);border-color:var(--jade);color:#fff}
+.nv-sum{font-size:.88rem;color:var(--ink-2);margin:.4rem 0 .9rem}
+.aside .btn{width:100%}
+
+/* ---------- question paper ---------- */
+.part-head{margin:2.2rem 0 1rem;padding-bottom:.8rem;border-bottom:2px solid var(--ink)}
+.part-head:first-child{margin-top:0}
+.part-head h2{font-size:1.25rem}
+.part-head .zh{font-size:1.05rem;margin-top:.15rem}
+.part-head .hint{color:var(--muted);font-size:.92rem;margin-top:.15rem}
+.bank{display:flex;flex-wrap:wrap;gap:.5rem .5rem;background:#f6f1e3;border:1px solid #e3d9b9;border-radius:10px;padding:.8rem 1rem;margin-bottom:.9rem}
+.bank span{font-family:var(--zh);font-size:1.15rem;background:#fff;border:1px solid #e3d9b9;border-radius:7px;padding:.2rem .7rem}
+.bank b{font-family:var(--ui);font-size:.82rem;color:var(--amber);margin-right:.35rem}
+.q{display:grid;grid-template-columns:48px 1fr;gap:.9rem;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:1.1rem 1.2rem;margin-bottom:.8rem;scroll-margin-top:calc(var(--xh-h) + 14px)}
+.qno{width:40px;height:40px;border-radius:8px;background:var(--ink);color:#fff;display:grid;place-items:center;font-weight:700;font-variant-numeric:tabular-nums}
+.stem{font-family:var(--zh);font-size:1.2rem;line-height:1.9;margin-bottom:.8rem}
+.stem p+p{margin-top:.1rem}
+.stem .ask{font-weight:700;margin-top:.5rem}
+.passage{font-family:var(--zh);line-height:2;background:#fafaf6;border-left:4px solid var(--jade);padding:.7rem 1rem;border-radius:0 8px 8px 0;margin-bottom:.9rem}
+.blank{display:inline-block;min-width:3.4em;border-bottom:2px solid var(--ink);text-align:center;padding:0 .3em;color:var(--jade-d);font-weight:700}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(9.5rem,1fr));gap:.55rem}
+.opts.tf{grid-template-columns:repeat(2,minmax(0,12rem))}
+.opts.six{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:560px){.opts.six{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.opt{display:flex;align-items:center;gap:.65rem;text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:9px;padding:.55rem .75rem;transition:border-color .12s,background .12s}
+.opt:hover{border-color:var(--ink-2)}
+.opt .ol{flex:none;width:28px;height:28px;border-radius:50%;border:1.5px solid var(--ink-2);display:grid;place-items:center;font-weight:700;font-size:.85rem}
+.opt .ot{font-family:var(--zh);font-size:1.12rem;line-height:1.4}
+.opt.sel{border-color:var(--jade);background:var(--jade-l)}
+.opt.sel .ol{background:var(--jade);border-color:var(--jade);color:#fff}
+.tf .opt{justify-content:center;font-weight:700;font-size:1.05rem;padding:.7rem}
+.tf .opt .ot{font-family:var(--ui);font-weight:700;font-size:1.05rem}
+
+.order-lines{list-style:none;padding:0;margin:0 0 .9rem;display:grid;gap:.35rem}
+.order-lines li{display:grid;grid-template-columns:auto 1fr;gap:.7rem;font-family:var(--zh);font-size:1.12rem;line-height:1.7}
+.order-lines li b{font-family:var(--ui);color:var(--jade-d);width:1.6em}
+.order-ans{display:flex;flex-wrap:wrap;align-items:center;gap:.8rem 1.4rem;border-top:1px dashed var(--line);padding-top:.8rem}
+.slots{display:flex;gap:.4rem;align-items:center}
+.slots .slot{width:42px;height:42px;border-radius:8px;border:2px dashed var(--line);display:grid;place-items:center;font-weight:700;font-size:1.1rem}
+.slots .slot.f{border:2px solid var(--jade);background:var(--jade-l);color:var(--jade-d)}
+.slots .arrow{color:var(--muted)}
+.picks{display:flex;gap:.45rem;align-items:center;flex-wrap:wrap}
+.pick{width:42px;height:42px;border-radius:8px;border:1.5px solid var(--ink-2);background:#fff;font-weight:700;font-size:1.05rem}
+.pick:hover:not([disabled]){background:var(--ink);color:#fff}
+.pick[disabled]{opacity:.3;cursor:not-allowed}
+
+.sentence{min-height:58px;display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;border:2px dashed var(--line);border-radius:10px;padding:.6rem;margin-bottom:.7rem;background:#fafcfb}
+.sentence.f{border-style:solid;border-color:var(--jade)}
+.sentence .ph{color:var(--muted);font-size:.9rem;padding:0 .3rem}
+.pool{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:.7rem}
+.chip{font-family:var(--zh);font-size:1.2rem;border:1.5px solid var(--ink-2);background:#fff;border-radius:8px;padding:.3rem .8rem}
+.chip:hover:not([disabled]){background:var(--ink);color:#fff}
+.chip.used{opacity:.25;border-style:dashed;cursor:not-allowed}
+.sentence .chip{background:var(--jade-l);border-color:var(--jade)}
+.sentence .chip:hover{background:var(--red-l);border-color:var(--red);color:var(--red)}
+
+.zoomable{--zoom:1;font-size:calc(1rem*var(--zoom))}
+.zoomable .stem,.zoomable .passage{font-size:calc(1.15rem*var(--zoom))}
+.zoomable .opt .ot{font-size:calc(1.1rem*var(--zoom))}
+.zoomable .opt .ol{width:calc(28px*var(--zoom));height:calc(28px*var(--zoom));font-size:calc(.85rem*var(--zoom))}
+.zoomable .opts{grid-template-columns:repeat(auto-fit,minmax(calc(9.5rem*var(--zoom)),1fr))}
+.zoombar{position:sticky;top:calc(var(--xh-h) + 8px);z-index:10;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;background:var(--paper);border:1.5px solid var(--ink);border-radius:10px;padding:.5rem .8rem;margin-bottom:.9rem;font-size:1rem}
+.zoombar .lbl{font-weight:600;margin-right:auto}
+.zoombar .val{min-width:3.3em;text-align:center;font-variant-numeric:tabular-nums;font-weight:700}
+.zoombar .btn{min-width:46px}
+
+.w2{display:grid;grid-template-columns:150px 1fr;gap:1.1rem;align-items:start}
+.w2 figure{margin:0;display:grid;place-items:center;background:#f4f6f5;border-radius:10px;padding:.5rem;min-height:140px}
+.w2 img{max-width:100%;max-height:200px;display:block}
+.w2-word{margin-bottom:.5rem;font-weight:600}
+.w2-word .zh{font-size:1.5rem;background:var(--ink);color:#fff;border-radius:8px;padding:.05rem .7rem;margin-left:.4rem}
+textarea.zh-in{font-family:var(--zh);font-size:1.2rem;line-height:1.7;min-height:92px;resize:vertical}
+.count{color:var(--muted);font-size:.82rem}
+.example{background:#f6f1e3;border:1px solid #e3d9b9;border-radius:12px;padding:1rem 1.2rem;margin-bottom:.9rem;display:flex;gap:1rem;align-items:center}
+.example img{height:90px}
+.example p{font-size:.9rem;color:var(--ink-2)}
+.example .zh{font-size:1.15rem;color:var(--ink)}
+
+.actionbar{margin-top:2rem;padding:1.3rem;border:2px solid var(--ink);border-radius:12px;background:var(--paper);display:flex;flex-wrap:wrap;gap:1rem;align-items:center;justify-content:space-between}
+.actionbar p{color:var(--ink-2);max-width:34rem;font-size:.95rem}
+
+/* ---------- modal & toast ---------- */
+.modal{position:fixed;inset:0;background:rgba(10,20,34,.6);display:grid;place-items:center;z-index:100;padding:1rem}
+.modal-box{background:#fff;border-radius:14px;padding:1.7rem;max-width:460px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.modal-box h3{font-size:1.25rem;margin-bottom:.5rem}
+.modal-box p{color:var(--ink-2);margin-bottom:1.3rem}
+.modal-actions{display:flex;gap:.7rem;justify-content:flex-end;flex-wrap:wrap}
+.toast{pointer-events:none;position:fixed;left:50%;bottom:1.5rem;transform:translateX(-50%);background:var(--ink);color:#fff;padding:.8rem 1.3rem;border-radius:10px;z-index:120;font-weight:600;box-shadow:0 8px 30px rgba(0,0,0,.3);max-width:90vw;text-align:center}
+.toast.warn{background:var(--amber)}
+.toast.crit{background:var(--red)}
+
+/* ---------- result ---------- */
+.result{max-width:860px;margin:0 auto;padding:2.5rem 1.2rem 4rem}
+.result>header h1{font-size:1.8rem}
+.result>header p{color:var(--muted);margin-top:.2rem}
+.pill{display:inline-block;padding:.15rem .7rem;border-radius:99px;font-size:.82rem;font-weight:700;margin-left:.5rem;vertical-align:middle}
+.pill.timeout{background:var(--red-l);color:var(--red)}
+.pill.manual{background:var(--jade-l);color:var(--jade-d)}
+.sheet{background:var(--paper);border:1px solid var(--line);border-radius:14px;margin-top:1.6rem;overflow:hidden}
+.sheet h2{font-size:1.1rem;padding:1rem 1.4rem;border-bottom:1px solid var(--line)}
+.score-row{display:grid;grid-template-columns:1fr auto;gap:.2rem 1rem;padding:1rem 1.4rem;border-bottom:1px solid var(--line);align-items:end}
+.score-row .name{font-weight:700;font-size:1.05rem}
+.score-row .meta{color:var(--muted);font-size:.9rem}
+.score-row .val{font-size:1.7rem;font-weight:700;font-variant-numeric:tabular-nums;text-align:right;line-height:1}
+.score-row .val small{font-size:.9rem;color:var(--muted);font-weight:600}
+.score-row .track{grid-column:1/-1;height:8px;border-radius:99px;background:#e6ecea;overflow:hidden}
+.score-row .track i{display:block;height:100%;background:var(--jade);border-radius:99px}
+.score-row .note{grid-column:1/-1;font-size:.88rem;color:var(--amber);font-weight:600}
+.score-total{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1.3rem 1.4rem;background:var(--ink);color:#fff;flex-wrap:wrap}
+.score-total .lbl b{display:block;font-size:1.1rem}
+.score-total .lbl span{font-size:.88rem;color:#aebfcc}
+.score-total .num{font-size:2.6rem;font-weight:700;font-variant-numeric:tabular-nums;line-height:1}
+.score-total .num small{font-size:1rem;color:var(--jade-b)}
+.manual-item{display:grid;grid-template-columns:100px 1fr;gap:1rem;padding:1rem 1.4rem;border-bottom:1px solid var(--line);align-items:center}
+.manual-item:last-child{border-bottom:0}
+.manual-item figure{margin:0;background:#f4f6f5;border-radius:8px;padding:.3rem;display:grid;place-items:center}
+.manual-item img{max-width:100%;max-height:90px}
+.manual-item .no{font-weight:700;font-size:.9rem;color:var(--muted)}
+.manual-item .w{font-size:1.05rem}
+.manual-item .ans{font-family:var(--zh);font-size:1.25rem;line-height:1.7;margin-top:.2rem;padding:.4rem .7rem;background:#f6f1e3;border-radius:8px;white-space:pre-wrap;word-break:break-word}
+.manual-item .ans.empty{color:var(--muted);font-family:var(--ui);font-size:.95rem;font-style:italic}
+.grid-wrap{padding:1rem 1.4rem 1.2rem}
+.rgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(38px,1fr));gap:5px}
+.rg{height:34px;border-radius:6px;border:0;font-weight:700;font-size:.82rem;color:#fff}
+.rg.ok{background:var(--jade)} .rg.no{background:var(--red)} .rg.mn{background:#c99a2e}
+.rg.cur{outline:3px solid var(--ink);outline-offset:1px}
+.legend{display:flex;gap:1rem;flex-wrap:wrap;font-size:.85rem;color:var(--ink-2);margin:.8rem 0 .4rem}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:.35rem;vertical-align:-1px}
+#detailLine{font-size:.95rem;min-height:1.5em;font-weight:600}
+.sync{margin-top:1.2rem;padding:.8rem 1.1rem;border-radius:10px;font-size:.92rem;display:flex;gap:.8rem;align-items:center;flex-wrap:wrap}
+.sync.ok{background:var(--jade-l);color:var(--jade-d)}
+.sync.pending{background:var(--amber-l);color:var(--amber)}
+.sync.fail{background:var(--red-l);color:var(--red)}
+.sync.off{background:#e6ecea;color:var(--ink-2)}
+.result-actions{margin-top:2rem;display:flex;gap:.8rem;flex-wrap:wrap;justify-content:space-between;align-items:center}
+
+/* ---------- responsive ---------- */
+@media (max-width:900px){
+  .login{grid-template-columns:1fr}
+  .login-hero{padding:1.6rem 1.4rem}
+  .login-hero .glyph{font-size:7rem}
+  .format{display:none}
+  .xbody{grid-template-columns:1fr}
+  .aside{position:static;order:-1}
+  .aside summary{display:block}
+  .xh-steps{display:none}
+  .xh-id span{max-width:110px}
+}
+@media (max-width:560px){
+  .q{grid-template-columns:1fr;padding:1rem}
+  .qno{width:34px;height:34px}
+  .w2{grid-template-columns:1fr}
+  .xh-timer{font-size:1.3rem}
+  .panel{padding:1.3rem}
+  .manual-item{grid-template-columns:70px 1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<noscript><p style="padding:2rem">Halaman ini membutuhkan JavaScript.</p></noscript>
+
+<!-- ============ 1. LOGIN ============ -->
+<section id="screen-login" class="screen active">
+  <div class="login">
+    <aside class="login-hero">
+      <div>
+        <div class="glyph" lang="zh" aria-hidden="true">四级</div>
+        <h1>HSK 4 Mocktest</h1>
+        <p class="code">Paket soal H41327</p>
+      </div>
+      <ul class="format">
+        <li><span>Listening</span><b>45 soal</b></li>
+        <li><span>Reading</span><b>40 soal</b></li>
+        <li><span>Writing</span><b>15 soal</b></li>
+        <li><span>Waktu total</span><b>105 menit</b></li>
+      </ul>
+    </aside>
+    <div class="login-form-wrap">
+      <form class="login-form" id="loginForm" autocomplete="off">
+        <h2>Masuk ujian</h2>
+        <p class="sub">Isi data berikut. Nama akan tampil di panel pengawas.</p>
+
+        <div class="resume" id="resumeBox" hidden>
+          <p id="resumeText"></p>
+          <div class="row">
+            <button type="button" class="btn btn-primary btn-sm" id="btnResume">Lanjutkan ujian</button>
+            <button type="button" class="btn btn-sm" id="btnDiscard">Mulai dari awal</button>
+          </div>
+        </div>
+
+        <label class="field"><span>Nama lengkap</span>
+          <input type="text" id="inName" required minlength="2" maxlength="60" placeholder="Nama peserta">
+        </label>
+        <label class="field"><span>Tanggal mocktest</span>
+          <input type="date" id="inDate" required>
+        </label>
+        <button type="submit" class="btn btn-primary btn-lg" style="width:100%">Lanjut ke tes perangkat</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 2. DEVICE TEST ============ -->
+<section id="screen-device" class="screen">
+  <div class="center">
+    <div class="panel">
+      <h2>Tes perangkat</h2>
+      <p class="sub">Pastikan suara dan keyboard Mandarin berfungsi sebelum ujian dimulai.</p>
+
+      <div class="step" id="stepSound">
+        <div class="badge">1</div>
+        <h3>Tes suara</h3>
+        <p>Pasang headset, lalu putar suara tes. Atur volume sampai terdengar jelas.</p>
+        <div class="controls">
+          <button type="button" class="btn" id="btnPlayTest">▶ Putar suara tes</button>
+          <button type="button" class="btn btn-primary" id="btnHeard" hidden>Saya mendengar suaranya</button>
+          <span class="msg" id="soundMsg"></span>
+        </div>
+      </div>
+
+      <div class="step" id="stepKb">
+        <div class="badge">2</div>
+        <h3>Tes keyboard Mandarin</h3>
+        <p>Aktifkan input Pinyin, lalu ketik minimal satu karakter Mandarin, misalnya <span lang="zh">你好</span>.</p>
+        <div class="controls" style="display:block">
+          <input type="text" id="kbInput" class="kb-input" lang="zh" placeholder="Ketik di sini…" autocomplete="off">
+          <p class="msg" id="kbMsg" style="margin-top:.5rem"></p>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button type="button" class="btn btn-ghost" id="btnBackLogin">Kembali</button>
+        <button type="button" class="btn btn-primary btn-lg" id="btnDeviceDone" disabled>Konfirmasi: tes perangkat selesai</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. READY ============ -->
+<section id="screen-ready" class="screen">
+  <div class="center">
+    <div class="panel">
+      <h2>Siap mengikuti ujian?</h2>
+      <p class="sub" id="readyWho"></p>
+
+      <table class="overview">
+        <thead><tr><th>Sesi</th><th>Soal</th><th>Isi</th></tr></thead>
+        <tbody>
+          <tr><td>Listening</td><td>1–45</td><td>Audio diputar otomatis, satu kali</td></tr>
+          <tr><td>Reading</td><td>46–85</td><td>Pilih kata, susun kalimat, bacaan</td></tr>
+          <tr><td>Writing</td><td>86–100</td><td>Susun hanzi dan menulis kalimat</td></tr>
+        </tbody>
+      </table>
+
+      <ul class="checks" id="readyChecks">
+        <li><label><input type="checkbox"><span>Saya sudah memakai headset dan volume sudah pas.</span></label></li>
+        <li><label><input type="checkbox"><span>Waktu <b>105 menit</b> langsung berjalan begitu ujian dimulai dan tidak bisa dijeda.</span></label></li>
+        <li><label><input type="checkbox"><span>Audio Listening diputar <b>satu kali</b> dan tidak bisa diulang.</span></label></li>
+        <li><label><input type="checkbox"><span>Setelah pindah sesi (Listening → Reading → Writing), saya <b>tidak bisa kembali</b>.</span></label></li>
+        <li><label><input type="checkbox"><span>Jika waktu habis, jawaban otomatis dikumpulkan dan dinilai.</span></label></li>
+        <li><label><input type="checkbox"><span>Saya tidak akan menutup atau me-refresh halaman selama ujian.</span></label></li>
+      </ul>
+
+      <div class="actions">
+        <button type="button" class="btn btn-ghost" id="btnBackDevice">Kembali</button>
+        <button type="button" class="btn btn-primary btn-lg" id="btnStart" disabled>Mulai ujian</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4. EXAM ============ -->
+<section id="screen-exam" class="screen">
+  <header class="xh" id="xh">
+    <div class="xh-row">
+      <div class="xh-id"><strong>HSK 4 · H41327</strong><span id="xhName"></span></div>
+      <ol class="xh-steps" id="xhSteps">
+        <li data-step="listening">Listening</li>
+        <li data-step="reading">Reading</li>
+        <li data-step="writing">Writing</li>
+      </ol>
+      <div class="xh-timer" id="timer" role="timer" aria-label="Sisa waktu ujian">1:45:00</div>
+    </div>
+    <div class="audiobar" id="audioBar" hidden>
+      <div class="in">
+        <span id="audioStatus"><span class="dot"></span>Audio sedang diputar. Tidak bisa dijeda atau diulang.</span>
+        <div class="bar"><i id="audioFill"></i></div>
+        <span class="time" id="audioTime">0:00 / 0:00</span>
+        <button type="button" class="btn btn-primary btn-sm" id="btnAudioStart" hidden>▶ Putar audio</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="xbody">
+    <main id="examMain" aria-live="off"></main>
+    <aside class="aside" id="aside">
+      <details id="navDetails" open>
+        <summary id="navSummary">Daftar nomor</summary>
+        <div id="navBody"></div>
+      </details>
+    </aside>
+  </div>
+</section>
+
+<!-- ============ 5. RESULT ============ -->
+<section id="screen-result" class="screen">
+  <div class="result" id="resultRoot"></div>
+</section>
+
+<!-- modal + toast -->
+<div class="modal" id="modal" hidden>
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <h3 id="mTitle"></h3>
+    <p id="mText"></p>
+    <div class="modal-actions">
+      <button type="button" class="btn" id="mCancel">Kembali</button>
+      <button type="button" class="btn btn-primary" id="mOk">Ya</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+'use strict';
+/* =====================================================================
+   KONFIGURASI  — ubah di sini
+   ===================================================================== */
+const CONFIG = {
+  // Tempel URL Web App Google Apps Script di sini (lihat README.md).
+  // Kosongkan jika belum ingin menyambungkan ke spreadsheet.
+  SHEET_URL: '',
+
+  DURATION_MIN: 105,
+  AUDIO: {
+    listening: 'audio/listening.mp3',
+    test:      'audio/test-sound.mp3',
+    result:    'audio/result-music.mp3'
+  },
+  // Bobot nilai Writing: 86–95 otomatis (maks 75), 96–100 manual (maks 25)
+  W1_POINT: 7.5,
+  W2_MAX: 25
+};
+
+/* =====================================================================
+   DATA SOAL & KUNCI JAWABAN (dari file answer sheet H41327)
+   ===================================================================== */
+const QUESTIONS = {};
+const KEY = {};
+const add = (no, q) => { q.no = no; QUESTIONS[no] = q; };
+
+/* ---- Listening bagian 1 (1–10): benar / salah ---- */
+const L1 = ['他暑假想去云南旅游。','女儿晚上要加班。','他习惯了这里的生活。','他们在谈价格。','中国人喜欢数字“6”。','他几乎每天都去打篮球。','今天报名还来得及。','小林是律师。','不要总是羡慕别人。','明天中午有大雪。'];
+'TFTFTFTFTF'.split('').forEach((k,i)=>{ add(i+1,{type:'tf',stem:'★ '+L1[i]}); KEY[i+1]=k; });
+
+/* ---- Listening bagian 2 (11–25) ---- */
+const L2 = [
+ ['同事','叔叔','奶奶','观众'],['下雨了','刚洗完澡','开空调了','开着窗户'],['步行','骑车','坐地铁','坐出租车'],
+ ['打网球','擦桌子','洗衣服','找袜子'],['太随便','写得不错','没原来的好','与实际不符'],['暂时别卖','上网看看','先借一个用','找朋友商量'],
+ ['填表','寄东西','买铅笔','打印菜单'],['想请假','在办护照','下周出差','拿到签证了'],['是教授','成绩不好','在开玩笑','考上了博士'],
+ ['开会','买手机','发传真','写邀请信'],['很无聊','很奇怪','十分精彩','让人失望'],['请客','扔垃圾','抬沙发','收拾行李'],
+ ['很成熟','很勇敢','遇事冷静','可以做翻译'],['公园','大使馆','首都体育馆','国家图书馆'],['牙疼','困了','胖了','肚子不舒服']];
+'BCDABBADDACBDBA'.split('').forEach((k,i)=>{ add(11+i,{type:'mc',opts:L2[i]}); KEY[11+i]=k; });
+
+/* ---- Listening bagian 3 (26–45) ---- */
+const L3 = [
+ ['灯不亮了','冰箱坏了','女的迟到了','房间很暖和'],['很吵','菜好吃','啤酒便宜','服务员很少'],['爱跳舞','爱听广播','会唱京剧','是数学老师'],
+ ['要去面试','要演节目','要看表演','要参加讨论会'],['不自然','简单易懂','让人感动','不吸引人'],['教室','电梯里','理发店','办公室'],
+ ['盐','镜子','牙膏','西红柿'],['饿了','没睡醒','钱包丢了','弄脏裙子了'],['放宽标准','多积累经验','输赢不重要','按照规定办'],
+ ['宾馆右边','学校西门','蛋糕店旁边','植物园后面'],['司机','导游','警察','售货员'],['很旧','速度快','能到动物园','从火车站始发'],
+ ['药','草','食品','饮料'],['是酸的','怕阳光','历史很长','红茶最流行'],['照相机','洗衣机','复印机','洗碗机'],
+ ['箱子上','说明书上','合格证上','保修卡上'],['不能吃鱼','不能喝果汁','饭后要散步','不能吃辣的'],['别吃早饭','多吃水果','要有好心情','不能戴手表'],
+ ['发脾气','替孩子做','说孩子懒','故意咳嗽'],['仔细','多阅读','主动预习','会安排时间']];
+'ABCACCDCBBACACBDDABD'.split('').forEach((k,i)=>{ add(26+i,{type:'mc',opts:L3[i]}); KEY[26+i]=k; });
+
+/* ---- Reading bagian 1 (46–55): pilih kata ---- */
+const BANK1 = ['拉','圆','完全','坚持','重点','饺子'];
+const BANK2 = ['样子','超过','温度','入口','严重','整理'];
+const R1 = [
+ ['今天晚上的月亮又大又{}，真漂亮，咱们出去走走吧。'],
+ ['我最喜欢过年，全家人在一起包{}，热闹极了。'],
+ ['他{}有能力做好这件事，但他没有认真去做。'],
+ ['那棵树特别粗，要四五个大人手{}手才能抱住。'],
+ ['讲话应先讲{}，这样才能使别人更快地了解你想表达的意思。'],
+ ['A：飞机还有40分钟就要起飞了，你怎么还没到？','B：路上堵车。我现在在{}处，马上就到。'],
+ ['A：能把照片发到我邮箱里吗？','B：没问题，把你的邮箱地址告诉我，我{}好了就发给你。'],
+ ['A：你好，请问我女儿可以买儿童票吗？','B：可以，身高没{}一米二就可以买。'],
+ ['A：看{}你对这里很熟悉。','B：当然了，我在这儿生活了大约10年，去年才搬走的。'],
+ ['A：只是腿擦破了点儿皮，大夫说不{}。','B：没事就好，你先躺下休息一会儿吧。']];
+'BFCAEDFBAE'.split('').forEach((k,i)=>{ add(46+i,{type:'mc',bank:i<5?BANK1:BANK2,opts:i<5?BANK1:BANK2,lines:R1[i]}); KEY[46+i]=k; });
+
+/* ---- Reading bagian 2 (56–65): susun kalimat ---- */
+const R2 = [
+ ['至少我们努力过','即使失败了也没关系','机会来了，就该主动去试一试'],
+ ['但世界上还有很多是钱买不到、也换不来的','钱虽然能买到很多东西','例如生命、爱情、友谊和时间'],
+ ['北方秋天很干燥，你刚来','觉得不适应很正常','每天多喝水，习惯了就不会那么难受了'],
+ ['实际上，很多问题的答案都可以从生活中找到','课本上的知识并不能解决我们遇到的所有问题','但这需要我们用眼睛去发现，用心去总结'],
+ ['还能扩大知识面','我提高汉语水平的方法就是坚持看中文报纸','这样不但能学到很多新的词语'],
+ ['这些家具很多都是他帮忙抬上来的','力气却大得很','别看小黄个子不高，人也瘦'],
+ ['飞往该市的好几趟航班','昨晚19时南京市突然下起了大雨','都不得不推迟起飞'],
+ ['我家离北京很近','所以周末和节假日我一般都会回家','只有100多公里，开车的话大约一个小时就到了'],
+ ['懂得互相信任和尊重才是最重要的','两个人既然决定共同生活','那么，只有浪漫和新鲜感是不够的'],
+ ['一看见医生就哭，他怎么都没想到','我长大后竟然会成为一名护士','爸爸说我小时候特别害怕打针']];
+['CBA','BAC','ABC','BAC','BCA','CBA','BAC','ACB','BCA','CAB'].forEach((k,i)=>{ add(56+i,{type:'order',lines:R2[i]}); KEY[56+i]=k; });
+
+/* ---- Reading bagian 3 (66–85): bacaan ---- */
+const R3 = [
+ {qs:[66],passage:'每个人都有缺点，再优秀的人也一样。我们总是很容易看到一个人的缺点，但是别忘了，他身上的优点更值得我们去发现、去学习。'},
+ {qs:[67],passage:'森林有改变小范围气候的作用。在高温的夏季，森林内的温度会比周围低3到5℃；而在寒冷多风的冬季，森林能起到降低风速、提高气温的作用。'},
+ {qs:[68],passage:'选择职业时，我们首先应该对自己有清楚的认识，不仅要知道自己想做什么，还要根据自己的性格、爱好去判断什么样的工作适合自己，这样才能找到满意的工作。'},
+ {qs:[69],passage:'有些人通过节食的方法来减肥，虽然有效，但是时间长了身体会受不了。真正健康的减肥方法应该是多锻炼，这样做既对身体好，还能让自己看起来更有精神。'},
+ {qs:[70],passage:'张先生，这儿离你们公司也就两三站的距离，周围环境不错，对面有超市和银行，房租也不贵，您要不要再考虑一下？'},
+ {qs:[71],passage:'大城市和小城市各有各的好处。大城市的工作机会确实多一些，但竞争的压力大；相反，在小城市生活就会轻松许多。'},
+ {qs:[72],passage:'如果一个人必须要完成一件自己不喜欢的事情，最好的办法就是早点儿把它做完，这样才能提前结束烦恼。'},
+ {qs:[73],passage:'老教授对新生说：“从今天起，如果你每天用100字把自己的生活写下来，毕业时你将会得到一本10多万字的书，内容就是你4年大学生活的美好回忆。”'},
+ {qs:[74],passage:'语言是人们交流的工具，音乐也是一种语言，人们可以用它来表达自己的感情，而且和其他语言比起来，音乐表达的感情有时更容易让人听懂。'},
+ {qs:[75],passage:'很多时候，人们习惯根据过去的经验做事，但有时候也不能完全相信经验，而应该根据不同的情况选择不同的方法，这样才不容易出错。'},
+ {qs:[76],passage:'马校长介绍说，学校举办这次文化节活动，一方面是想让各国学生更好地了解中国，另一方面是想为学生们提供互相交流和学习的机会。'},
+ {qs:[77],passage:'他平时就对自己要求很严格，尤其是赛前那个星期，他每天都会把全部动作练习好几遍，希望在比赛中做到最好。'},
+ {qs:[78],passage:'拒绝握手是不礼貌的，不过当手不干净时，可以先拒绝，然后马上解释原因并对此表示抱歉，否则可能引起误会，让人以为你不友好。'},
+ {qs:[79],passage:'叶诗文是中国著名的游泳运动员，她6岁时就比同龄人高不少，老师看她手脚也大，身体其他条件也很符合游泳运动员的要求，就鼓励她专门去学游泳。尽管她现在只有16岁，但已经获得了好几个国际大奖。'},
+ {qs:[80,81],passage:'目的地也许只有一个，但是通往目的地的道路却有很多条。所以，当一条路走不通时，我们可以换另外一条试试。只要我们不放弃努力，总会找到一条合适的路，通往成功的目的地。'},
+ {qs:[82,83],passage:'顾客朋友们，本店现推出“购书送好礼”活动，购书满100元即可获得日记本一个，满200元可获得字典一部。另外，部分图书还有打折活动，其中，小说7.5折，杂志8折，研究生入学考试用书等6折。欢迎选购！祝您购物愉快！'},
+ {qs:[84,85],passage:'保护地球环境，并不是离我们很远、很难做到的事情。实际上，我们只需注意一下身边的小事就可以。例如，出门时记得关空调和电脑，节约用电；少开车，多骑车或者坐公共汽车，降低空气污染；买菜时自备购物袋，少用塑料袋，减少白色污染……这些虽然都是小事，却有实实在在的效果。'}
+];
+const R3Q = {
+ 66:['这段话提醒我们要：',['有耐心','接受批评','学会原谅','看到别人的优点']],
+ 67:['夏季，森林可以：',['降低气温','改变风向','增加雨量','使皮肤湿润']],
+ 68:['选择职业时，应该：',['多调查','打好基础','及时总结','先认清自己']],
+ 69:['想要健康减肥，应该：',['多运动','少吃米饭','经常站着','多玩儿电子游戏']],
+ 70:['张先生：',['被骗了','住在附近','在找房子','在看广告']],
+ 71:['他觉得小城市：',['更安静','收入高','招聘会多','生活压力小']],
+ 72:['对不喜欢却又必须做的事，最好：',['找人帮忙','交给别人','早点儿完成','留到最后做']],
+ 73:['老教授希望学生：',['诚实','别太得意','经常复习','记下自己的生活']],
+ 74:['根据这段话，音乐表达的感情：',['复杂多变','让人难过','更容易理解','让人印象更深']],
+ 75:['根据这段话，过去的经验：',['更准确','值得重视','无法被证明','不一定适合现在']],
+ 76:['学校举办这次活动，是想帮助学生们：',['认识汉字','熟悉校园','提高信心','相互增加了解']],
+ 77:['比赛前，他：',['更努力','十分兴奋','非常着急','停止了练习']],
+ 78:['拒绝握手后为什么要马上道歉？',['减少误会','怕人怀疑','想引人同情','想获得表扬']],
+ 79:['老师鼓励叶诗文学游泳，是因为觉得她：',['聪明','跑得快','获过奖','身体条件好']],
+ 80:['当一条路走不通时，我们应该：',['看地图','试试别的路','向当地人问路','给朋友打电话']],
+ 81:['这段话主要想告诉我们：',['要有理想','工作要积极','成功需要坚持','做事要有计划']],
+ 82:['购书满100元能获得什么礼物？',['词典','日记本','故事书','汉语书']],
+ 83:['根据这段话，可以知道：',['小说半价','放寒假了','有些书打折','书店生意很好']],
+ 84:['为了减少白色污染，我们应该：',['少说多做','节约用水','少用塑料袋','少用一次性筷子']],
+ 85:['这段话主要谈什么？',['社会责任','环境保护','节约与浪费','经济的发展']]
+};
+'DADACDCDCDDAADBCBCCB'.split('').forEach((k,i)=>{ const no=66+i; add(no,{type:'mc',ask:R3Q[no][0],opts:R3Q[no][1]}); KEY[no]=k; });
+
+/* ---- Writing bagian 1 (86–95): susun hanzi ---- */
+const W1 = [
+ [['你最好','一个密码','重新','换'],'你最好重新换一个密码。'],
+ [['不允许','医院','抽烟','里'],'医院里不允许抽烟。'],
+ [['看法','我','跟你的','差不多'],'我跟你的看法差不多。'],
+ [['发生了','这儿究竟','什么','事情'],'这儿究竟发生了什么事情？'],
+ [['他','一个','美丽的','小城市','出生在'],'他出生在一个美丽的小城市。'],
+ [['房间','把','收拾得','姐姐','很整齐'],'姐姐把房间收拾得很整齐。'],
+ [['是','负责的','由李经理','这次调查'],'这次调查是由李经理负责的。'],
+ [['反对这样做','大概','三分之二的人','有'],'大概有三分之二的人反对这样做。'],
+ [['学校','去参观','长城','将','组织大家'],'学校将组织大家去参观长城。'],
+ [['对','非常感谢您','理解和支持','我们工作的'],'非常感谢您对我们工作的理解和支持。']
+];
+const stripP = s => s.replace(/[，。？！、；：“”\s]/g,'');
+W1.forEach((w,i)=>{ add(86+i,{type:'chunks',chunks:w[0],answer:stripP(w[1])}); KEY[86+i]=w[1]; });
+
+/* ---- Writing bagian 2 (96–100): manual ---- */
+['轻','答案','钥匙','激动','聊天儿'].forEach((w,i)=>{ add(96+i,{type:'text',word:w,img:`img/q${96+i}.jpg`}); });
+
+/* ---- Struktur sesi ---- */
+const SECTIONS = {
+  listening:{label:'Listening',from:1,to:45,next:'reading',
+    parts:[{t:'Bagian 1 · Benar/salah',a:1,b:10},{t:'Bagian 2',a:11,b:25},{t:'Bagian 3',a:26,b:45}]},
+  reading:{label:'Reading',from:46,to:85,next:'writing',
+    parts:[{t:'Bagian 1 · Pilih kata',a:46,b:55},{t:'Bagian 2 · Susun kalimat',a:56,b:65},{t:'Bagian 3 · Bacaan',a:66,b:85}]},
+  writing:{label:'Writing',from:86,to:100,next:null,
+    parts:[{t:'Bagian 1 · Susun hanzi',a:86,b:95},{t:'Bagian 2 · Menulis',a:96,b:100}]}
+};
+const ZOOMS = [0.85,1,1.2,1.4,1.65,1.9];
+
+/* =====================================================================
+   UTIL
+   ===================================================================== */
+const $  = (s,r=document)=>r.querySelector(s);
+const $$ = (s,r=document)=>[...r.querySelectorAll(s)];
+const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt = n => (Math.round(n*10)/10).toLocaleString('id-ID',{minimumFractionDigits:0,maximumFractionDigits:1});
+const range = (a,b)=>Array.from({length:b-a+1},(_,i)=>a+i);
+const LS_KEY = 'hsk4_mock_session_v1';
+const clock = ms => { const s=Math.max(0,Math.ceil(ms/1000)); const h=Math.floor(s/3600), m=Math.floor(s%3600/60), sc=s%60; return `${h}:${String(m).padStart(2,'0')}:${String(sc).padStart(2,'0')}`; };
+const mmss = s => { s=Math.max(0,Math.floor(s||0)); return `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`; };
+
+let profile = {name:'',date:''};
+let S = null;                // sesi ujian aktif
+let timerHandle = null;
+let timerFlags = {};
+let result = null;
+let listenAudio = null;
+
+function showScreen(id){
+  $$('.screen').forEach(s=>s.classList.toggle('active', s.id==='screen-'+id));
+  window.scrollTo({top:0,left:0,behavior:'instant'});
+}
+function toast(msg, kind=''){
+  const t=$('#toast'); t.textContent=msg; t.className='toast '+kind; t.hidden=false;
+  clearTimeout(toast._h); toast._h=setTimeout(()=>{t.hidden=true},5000);
+}
+let modalResolve=null;
+function confirmDialog({title,text,ok='Ya',cancel='Kembali',danger=false}){
+  return new Promise(res=>{
+    modalResolve=res;
+    $('#mTitle').textContent=title; $('#mText').textContent=text;
+    $('#mOk').textContent=ok; $('#mCancel').textContent=cancel;
+    $('#mOk').className='btn '+(danger?'btn-danger':'btn-primary');
+    $('#modal').hidden=false; $('#mCancel').focus();
+  });
+}
+function closeModal(val){ $('#modal').hidden=true; if(modalResolve){const r=modalResolve; modalResolve=null; r(val);} }
+$('#mOk').onclick=()=>closeModal(true);
+$('#mCancel').onclick=()=>closeModal(false);
+document.addEventListener('keydown',e=>{ if(e.key==='Escape' && !$('#modal').hidden) closeModal(false); });
+
+/* =====================================================================
+   1. LOGIN
+   ===================================================================== */
+(function initDate(){
+  const d=new Date(); const p=n=>String(n).padStart(2,'0');
+  $('#inDate').value=`${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`;
+})();
+$('#loginForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const name=$('#inName').value.trim(), date=$('#inDate').value;
+  if(name.length<2||!date) return;
+  profile={name,date};
+  resetDevice();
+  showScreen('device');
+});
+
+/* =====================================================================
+   2. TES PERANGKAT
+   ===================================================================== */
+const device={sound:false,kb:false};
+const testAudio=new Audio(CONFIG.AUDIO.test);
+function resetDevice(){
+  device.sound=false; device.kb=false;
+  $('#kbInput').value=''; $('#kbMsg').textContent=''; $('#soundMsg').textContent='';
+  $('#btnHeard').hidden=true; $('#btnHeard').disabled=false;
+  $('#stepSound').classList.remove('ok'); $('#stepKb').classList.remove('ok');
+  checkDevice();
+}
+function checkDevice(){ $('#btnDeviceDone').disabled=!(device.sound&&device.kb); }
+$('#btnPlayTest').onclick=()=>{
+  testAudio.currentTime=0;
+  $('#soundMsg').textContent=''; $('#soundMsg').className='msg';
+  testAudio.play().then(()=>{ $('#btnHeard').hidden=false; $('#btnPlayTest').textContent='▶ Putar lagi'; })
+    .catch(()=>{ $('#soundMsg').textContent='Audio tes tidak bisa diputar. Periksa file audio/test-sound.mp3.'; $('#soundMsg').className='msg bad'; });
+};
+$('#btnHeard').onclick=()=>{
+  device.sound=true; $('#stepSound').classList.add('ok');
+  $('#soundMsg').textContent='✓ Suara berfungsi'; $('#soundMsg').className='msg good';
+  $('#btnHeard').hidden=true; checkDevice();
+};
+$('#kbInput').addEventListener('input',e=>{
+  const ok=/[\u3400-\u4dbf\u4e00-\u9fff]/.test(e.target.value);
+  device.kb=ok; $('#stepKb').classList.toggle('ok',ok);
+  const m=$('#kbMsg');
+  if(ok){ m.textContent='✓ Karakter Mandarin terdeteksi'; m.className='msg good'; }
+  else if(e.target.value){ m.textContent='Belum ada karakter Mandarin. Aktifkan input Pinyin lalu ketik lagi.'; m.className='msg bad'; }
+  else { m.textContent=''; }
+  checkDevice();
+});
+$('#btnBackLogin').onclick=()=>showScreen('login');
+$('#btnDeviceDone').onclick=()=>{
+  $('#readyWho').textContent=`${profile.name} · ${formatDateId(profile.date)}`;
+  $$('#readyChecks input').forEach(c=>c.checked=false);
+  $('#btnStart').disabled=true;
+  showScreen('ready');
+};
+function formatDateId(iso){
+  if(!iso) return '';
+  const [y,m,d]=iso.split('-').map(Number);
+  return new Date(y,m-1,d).toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'});
+}
+
+/* =====================================================================
+   3. KONFIRMASI SIAP
+   ===================================================================== */
+$('#readyChecks').addEventListener('change',()=>{
+  $('#btnStart').disabled=!$$('#readyChecks input').every(c=>c.checked);
+});
+$('#btnBackDevice').onclick=()=>showScreen('device');
+$('#btnStart').onclick=()=>startExam();
+
+/* =====================================================================
+   4. UJIAN
+   ===================================================================== */
+function newSession(){
+  const now=Date.now();
+  return {
+    id:'S'+now.toString(36)+Math.random().toString(36).slice(2,6),
+    name:profile.name, date:profile.date,
+    startedAt:now, endAt:now+CONFIG.DURATION_MIN*60000,
+    section:'listening', answers:{}, audioPos:0, audioEnded:false, zoomIdx:1, finished:false
+  };
+}
+function save(){ if(S&&!S.finished){ try{localStorage.setItem(LS_KEY,JSON.stringify(S));}catch(e){} } }
+
+function startExam(){
+  S=newSession(); save();
+  beginExamUI(false);
+  sendProgress('Sedang ujian');
+}
+function beginExamUI(resume){
+  timerFlags={};
+  showScreen('exam');
+  $('#xhName').textContent=S.name;
+  enterSection(S.section,resume);
+  startTimer();
+}
+function startTimer(){
+  clearInterval(timerHandle);
+  tick(); timerHandle=setInterval(tick,250);
+}
+function tick(){
+  if(!S||S.finished) return;
+  const rem=S.endAt-Date.now();
+  const el=$('#timer');
+  el.textContent=clock(rem);
+  el.className='xh-timer'+(rem<=60000?' crit':rem<=300000?' warn':'');
+  [[600,'Sisa waktu 10 menit.','warn'],[300,'Sisa waktu 5 menit.','warn'],[60,'Sisa waktu 1 menit. Jawaban akan dikumpulkan otomatis.','crit']].forEach(([s,msg,k])=>{
+    if(rem<=s*1000 && !timerFlags[s]){ timerFlags[s]=1; if(rem>0) toast(msg,k); }
+  });
+  if(rem<=0) submitExam('timeout');
+}
+
+/* ---- navigasi sesi ---- */
+function enterSection(id,resume=false){
+  S.section=id; save();
+  $$('#xhSteps li').forEach(li=>{
+    const order=['listening','reading','writing'];
+    const i=order.indexOf(li.dataset.step), c=order.indexOf(id);
+    li.className=i<c?'done':i===c?'current':'';
+  });
+  $('#examMain').innerHTML=renderSection(id);
+  buildNav(id);
+  applyZoom();
+  window.scrollTo({top:0,left:0,behavior:'instant'});
+  updateHeaderHeight();
+  if(id==='listening') startListening(resume); else stopListening();
+  if(!resume && id!=='listening') sendProgress('Sedang ujian');
+}
+function updateHeaderHeight(){
+  document.documentElement.style.setProperty('--xh-h',$('#xh').offsetHeight+'px');
+}
+new ResizeObserver(updateHeaderHeight).observe($('#xh'));
+
+/* ---- render ---- */
+function partHead(title,zh,hint){
+  return `<header class="part-head"><h2>${title}</h2><p class="zh" lang="zh">${zh}</p><p class="hint">${hint}</p></header>`;
+}
+function qCard(no,inner){
+  return `<article class="q" id="q${no}" data-no="${no}"><div class="qno" aria-label="Soal ${no}">${no}</div><div class="qbody">${inner}</div></article>`;
+}
+function mcOptions(no,opts,sel,cls=''){
+  return `<div class="opts ${cls}" role="group" aria-label="Pilihan soal ${no}">`+opts.map((t,i)=>{
+    const L='ABCDEF'[i], on=sel===L;
+    return `<button type="button" class="opt${on?' sel':''}" data-opt="${L}" aria-pressed="${on}"><span class="ol">${L}</span><span class="ot" lang="zh">${esc(t)}</span></button>`;
+  }).join('')+`</div>`;
+}
+function tfOptions(no,sel){
+  const o=[['T','√  Benar'],['F','×  Salah']];
+  return `<div class="opts tf" role="group" aria-label="Pilihan soal ${no}">`+o.map(([v,t])=>{
+    const on=sel===v;
+    return `<button type="button" class="opt${on?' sel':''}" data-opt="${v}" aria-pressed="${on}"><span class="ot">${t}</span></button>`;
+  }).join('')+`</div>`;
+}
+function renderMC(no){
+  const q=QUESTIONS[no], sel=S.answers[no];
+  let stem='';
+  if(q.type==='tf'){
+    return qCard(no,`<div class="stem" lang="zh"><p>${esc(q.stem)}</p></div>`+tfOptions(no,sel));
+  }
+  if(q.lines){
+    const blank=sel?q.opts['ABCDEF'.indexOf(sel)]:'';
+    stem=`<div class="stem" lang="zh">`+q.lines.map(l=>`<p>${esc(l).replace('{}',`<span class="blank" data-blank>${esc(blank)}</span>`)}</p>`).join('')+`</div>`;
+  } else if(q.ask){
+    stem=`<div class="stem" lang="zh"><p class="ask">★ ${esc(q.ask)}</p></div>`;
+  }
+  return qCard(no,stem+mcOptions(no,q.opts,sel,q.opts.length===6?'six':''));
+}
+function orderWidget(no){
+  const a=S.answers[no]||'';
+  const slots=[0,1,2].map(i=>`<span class="slot${a[i]?' f':''}">${a[i]||''}</span>`).join('<span class="arrow">›</span>');
+  const picks=['A','B','C'].map(L=>`<button type="button" class="pick" data-pick="${L}" ${a.includes(L)?'disabled':''} aria-label="Pilih ${L}">${L}</button>`).join('');
+  return `<div class="slots" aria-label="Urutan jawaban">${slots}</div>
+          <div class="picks">${picks}<button type="button" class="btn btn-sm" data-reset>Susun ulang</button></div>`;
+}
+function renderOrder(no){
+  const q=QUESTIONS[no];
+  const lines=q.lines.map((t,i)=>`<li><b>${'ABC'[i]}</b><span lang="zh">${esc(t)}</span></li>`).join('');
+  return qCard(no,`<ul class="order-lines">${lines}</ul><div class="order-ans" data-widget>${orderWidget(no)}</div>`);
+}
+function chunkWidget(no){
+  const q=QUESTIONS[no], a=S.answers[no]||[];
+  const done=a.length===q.chunks.length;
+  const placed=a.length?a.map(i=>`<button type="button" class="chip" data-unchunk="${i}" title="Klik untuk melepas" lang="zh">${esc(q.chunks[i])}</button>`).join(''):`<span class="ph">Klik potongan kata di bawah untuk menyusun kalimat</span>`;
+  const pool=q.chunks.map((c,i)=>`<button type="button" class="chip${a.includes(i)?' used':''}" data-chunk="${i}" ${a.includes(i)?'disabled':''} lang="zh">${esc(c)}</button>`).join('');
+  return `<div class="sentence${done?' f':''}" aria-label="Kalimat susunanmu">${placed}</div>
+          <div class="pool">${pool}</div>
+          <button type="button" class="btn btn-sm" data-reset>Susun ulang</button>`;
+}
+function renderChunks(no){
+  return qCard(no,`<div data-widget>${chunkWidget(no)}</div>`);
+}
+function renderText(no){
+  const q=QUESTIONS[no], v=S.answers[no]||'';
+  return qCard(no,`<div class="w2"><figure><img src="${q.img}" alt="Gambar soal ${no}"></figure>
+    <div><p class="w2-word">Gunakan kata:<span class="zh" lang="zh">${esc(q.word)}</span></p>
+    <textarea class="zh-in" data-text lang="zh" rows="3" placeholder="Tulis kalimat Mandarin yang sesuai dengan gambar…" aria-label="Jawaban soal ${no}">${esc(v)}</textarea>
+    <span class="count" data-count>${v.trim().length} karakter</span></div></div>`);
+}
+function renderAction(){
+  const sec=S.section;
+  const cfg={
+    listening:['Sudah selesai mengerjakan Listening?','Selesai Listening, lanjut ke Reading'],
+    reading:['Sudah selesai mengerjakan Reading?','Selesai Reading, lanjut ke Writing'],
+    writing:['Sudah semua dikerjakan? Setelah ini jawaban dikumpulkan dan dinilai.','Selesai ujian']
+  }[sec];
+  return `<div class="actionbar"><p>${cfg[0]}</p><button type="button" class="btn btn-primary btn-lg" data-action="next">${cfg[1]}</button></div>`;
+}
+function renderSection(id){
+  let h='';
+  if(id==='listening'){
+    h+=partHead('Bagian 1','第 1–10 题：判断对错。','Tentukan pernyataan benar (√) atau salah (×) sesuai audio.');
+    range(1,10).forEach(n=>h+=renderMC(n));
+    h+=partHead('Bagian 2','第 11–25 题：请选出正确答案。','Pilih jawaban yang paling tepat.');
+    range(11,25).forEach(n=>h+=renderMC(n));
+    h+=partHead('Bagian 3','第 26–45 题：请选出正确答案。','Pilih jawaban yang paling tepat.');
+    range(26,45).forEach(n=>h+=renderMC(n));
+  }
+  if(id==='reading'){
+    const bank=b=>`<div class="bank" lang="zh">${b.map((w,i)=>`<span><b>${'ABCDEF'[i]}</b>${w}</span>`).join('')}</div>`;
+    h+=partHead('Bagian 1','第 46–50 题：选词填空。','Pilih kata yang paling tepat untuk mengisi titik kosong.');
+    h+=bank(BANK1); range(46,50).forEach(n=>h+=renderMC(n));
+    h+=partHead('Bagian 1 (lanjutan)','第 51–55 题：选词填空。','Pilih kata yang paling tepat untuk mengisi titik kosong.');
+    h+=bank(BANK2); range(51,55).forEach(n=>h+=renderMC(n));
+    h+=partHead('Bagian 2','第 56–65 题：排列顺序。','Tiga kalimat A, B, C perlu diurutkan. Tekan huruf sesuai urutan yang benar.');
+    range(56,65).forEach(n=>h+=renderOrder(n));
+    h+=`<div class="zoomable" id="zoomArea">`;
+    h+=partHead('Bagian 3','第 66–85 题：请选出正确答案。','Baca teks, lalu pilih jawaban. Ukuran tulisan bisa diubah.');
+    h+=`<div class="zoombar"><span class="lbl">Ukuran tulisan</span>
+        <button type="button" class="btn btn-sm" data-zoom="-1" aria-label="Perkecil tulisan">A−</button>
+        <span class="val" id="zoomVal">100%</span>
+        <button type="button" class="btn btn-sm" data-zoom="1" aria-label="Perbesar tulisan">A+</button>
+        <button type="button" class="btn btn-sm btn-ghost" data-zoom="0">Reset</button></div>`;
+    R3.forEach(g=>{
+      if(g.qs.length===1){
+        const no=g.qs[0], q=QUESTIONS[no], sel=S.answers[no];
+        h+=qCard(no,`<div class="passage" lang="zh">${esc(g.passage)}</div><div class="stem" lang="zh"><p class="ask">★ ${esc(q.ask)}</p></div>`+mcOptions(no,q.opts,sel));
+      } else {
+        h+=`<div class="passage" lang="zh" style="margin-top:1.1rem">${esc(g.passage)}</div>`;
+        g.qs.forEach(no=>h+=renderMC(no));
+      }
+    });
+    h+=`</div>`;
+  }
+  if(id==='writing'){
+    h+=partHead('Bagian 1','第 86–95 题：完成句子。','Susun potongan kata menjadi kalimat yang benar. Klik kata yang sudah dipilih untuk melepasnya.');
+    range(86,95).forEach(n=>h+=renderChunks(n));
+    h+=partHead('Bagian 2','第 96–100 题：看图，用词造句。','Lihat gambar, lalu tulis satu kalimat memakai kata yang diberikan. Soal ini dikoreksi manual oleh pengawas.');
+    h+=`<div class="example"><img src="img/example.jpg" alt="Contoh gambar"><div><p>Contoh</p><p class="zh" lang="zh">乒乓球 → 她很喜欢打乒乓球。</p></div></div>`;
+    range(96,100).forEach(n=>h+=renderText(n));
+  }
+  return h+renderAction();
+}
+
+/* ---- navigator ---- */
+function isAnswered(no){
+  const a=S.answers[no], q=QUESTIONS[no];
+  if(a==null) return false;
+  if(q.type==='order') return a.length===3;
+  if(q.type==='chunks') return Array.isArray(a)&&a.length===q.chunks.length;
+  if(q.type==='text') return a.trim().length>0;
+  return !!a;
+}
+const countAnswered=(a,b)=>range(a,b).filter(isAnswered).length;
+function buildNav(id){
+  const sec=SECTIONS[id];
+  let h=`<h3>${sec.label}</h3><p class="nv-sum" id="nvSum"></p>`;
+  sec.parts.forEach(p=>{
+    h+=`<div class="nv-group"><p>${p.t}</p><div class="nv-grid">`+range(p.a,p.b).map(n=>`<button type="button" class="nv" data-goto="${n}" id="nv${n}">${n}</button>`).join('')+`</div></div>`;
+  });
+  h+=`<button type="button" class="btn btn-primary" data-action="next">${id==='writing'?'Selesai ujian':'Lanjut ke '+SECTIONS[sec.next].label}</button>`;
+  $('#navBody').innerHTML=h;
+  $('#navDetails').open=window.innerWidth>900;
+  refreshNav();
+}
+function refreshNav(){
+  const sec=SECTIONS[S.section];
+  range(sec.from,sec.to).forEach(n=>{ const b=$('#nv'+n); if(b) b.classList.toggle('done',isAnswered(n)); });
+  const c=countAnswered(sec.from,sec.to), t=sec.to-sec.from+1;
+  const s=$('#nvSum'); if(s) s.textContent=`${c} dari ${t} soal terjawab`;
+  $('#navSummary').textContent=`Daftar nomor · ${c}/${t} terjawab`;
+}
+window.addEventListener('resize',()=>{ if(S&&!S.finished) $('#navDetails').open=window.innerWidth>900; });
+$('#navDetails').addEventListener('click',e=>{ if(window.innerWidth>900 && e.target.closest('summary')) e.preventDefault(); });
+
+/* ---- zoom ---- */
+function applyZoom(){
+  const z=$('#zoomArea'); if(!z) return;
+  const v=ZOOMS[S.zoomIdx];
+  z.style.setProperty('--zoom',v);
+  const lbl=$('#zoomVal'); if(lbl) lbl.textContent=Math.round(v*100)+'%';
+}
+
+/* ---- interaksi ---- */
+$('#screen-exam').addEventListener('click',async e=>{
+  const t=e.target;
+  let b;
+  if((b=t.closest('[data-opt]'))){
+    const no=+b.closest('.q').dataset.no, v=b.dataset.opt;
+    if(S.answers[no]===v) delete S.answers[no]; else S.answers[no]=v;
+    updateMC(no); refreshNav(); save(); return;
+  }
+  if((b=t.closest('[data-pick]'))){
+    const no=+b.closest('.q').dataset.no, cur=S.answers[no]||'';
+    if(cur.length<3 && !cur.includes(b.dataset.pick)){ S.answers[no]=cur+b.dataset.pick; redrawWidget(no); refreshNav(); save(); }
+    return;
+  }
+  if((b=t.closest('[data-chunk]'))){
+    const no=+b.closest('.q').dataset.no;
+    (S.answers[no]=S.answers[no]||[]).push(+b.dataset.chunk);
+    redrawWidget(no); refreshNav(); save(); return;
+  }
+  if((b=t.closest('[data-unchunk]'))){
+    const no=+b.closest('.q').dataset.no, i=+b.dataset.unchunk;
+    S.answers[no]=(S.answers[no]||[]).filter(x=>x!==i);
+    if(!S.answers[no].length) delete S.answers[no];
+    redrawWidget(no); refreshNav(); save(); return;
+  }
+  if((b=t.closest('[data-reset]'))){
+    const no=+b.closest('.q').dataset.no;
+    delete S.answers[no]; redrawWidget(no); refreshNav(); save(); return;
+  }
+  if((b=t.closest('[data-zoom]'))){
+    const d=+b.dataset.zoom;
+    S.zoomIdx = d===0 ? 1 : Math.min(ZOOMS.length-1,Math.max(0,S.zoomIdx+d));
+    applyZoom(); save(); return;
+  }
+  if((b=t.closest('[data-goto]'))){
+    const el=$('#q'+b.dataset.goto);
+    if(el){ el.scrollIntoView({behavior:'smooth',block:'start'}); if(window.innerWidth<=900) $('#navDetails').open=false; }
+    return;
+  }
+  if(t.closest('[data-action="next"]')){ onNext(); return; }
+  if(t.closest('#btnAudioStart')){ playListening(); return; }
+});
+$('#examMain').addEventListener('input',e=>{
+  const ta=e.target.closest('textarea[data-text]'); if(!ta) return;
+  const no=+ta.closest('.q').dataset.no;
+  if(ta.value.trim()) S.answers[no]=ta.value; else delete S.answers[no];
+  ta.parentElement.querySelector('[data-count]').textContent=`${ta.value.trim().length} karakter`;
+  refreshNav(); save();
+});
+function updateMC(no){
+  const q=$('#q'+no); if(!q) return;
+  const sel=S.answers[no];
+  $$('[data-opt]',q).forEach(b=>{ const on=b.dataset.opt===sel; b.classList.toggle('sel',on); b.setAttribute('aria-pressed',on); });
+  const bl=$('[data-blank]',q);
+  if(bl) bl.textContent=sel?QUESTIONS[no].opts['ABCDEF'.indexOf(sel)]:'';
+}
+function redrawWidget(no){
+  const q=QUESTIONS[no], w=$('#q'+no+' [data-widget]');
+  w.innerHTML = q.type==='order'?orderWidget(no):chunkWidget(no);
+}
+
+async function onNext(){
+  const sec=SECTIONS[S.section];
+  const total=sec.to-sec.from+1, un=total-countAnswered(sec.from,sec.to);
+  const unText=un? `Masih ada ${un} soal yang belum terjawab. `:'Semua soal sudah terjawab. ';
+  let cfg;
+  if(S.section==='listening'){
+    const playing=listenAudio&&!S.audioEnded;
+    cfg={title:'Lanjut ke Reading?',
+      text:unText+(playing?'Audio belum selesai dan akan dihentikan. ':'')+'Setelah lanjut, kamu tidak bisa kembali ke Listening.',ok:'Ya, lanjut ke Reading'};
+  } else if(S.section==='reading'){
+    cfg={title:'Lanjut ke Writing?',text:unText+'Setelah lanjut, kamu tidak bisa kembali ke Reading.',ok:'Ya, lanjut ke Writing'};
+  } else {
+    cfg={title:'Selesaikan ujian?',text:unText+'Jawaban akan langsung dikumpulkan dan dinilai. Ini tidak bisa dibatalkan.',ok:'Ya, selesai ujian',danger:true};
+  }
+  const ok=await confirmDialog({...cfg,cancel:'Kembali mengerjakan'});
+  if(!ok||!S||S.finished) return;
+  if(S.section==='writing') submitExam('manual');
+  else enterSection(sec.next);
+}
+
+/* =====================================================================
+   AUDIO LISTENING (satu kali putar)
+   ===================================================================== */
+function startListening(resume){
+  stopListening();
+  $('#audioBar').hidden=false;
+  listenAudio=new Audio(CONFIG.AUDIO.listening);
+  listenAudio.preload='auto';
+  const a=listenAudio;
+  a.addEventListener('timeupdate',()=>{
+    if(a!==listenAudio) return;
+    S.audioPos=a.currentTime;
+    const d=a.duration||0;
+    $('#audioFill').style.width=d?(a.currentTime/d*100)+'%':'0';
+    $('#audioTime').textContent=`${mmss(a.currentTime)} / ${mmss(d)}`;
+    if(Math.floor(a.currentTime)%5===0) save();
+  });
+  a.addEventListener('ended',()=>{
+    if(a!==listenAudio) return;
+    S.audioEnded=true; save();
+    $('#audioStatus').innerHTML='<span class="dot off"></span>Audio selesai. Kamu bisa lanjut ke Reading kapan saja.';
+    $('#audioFill').style.width='100%';
+    $('#btnAudioStart').hidden=true;
+  });
+  a.addEventListener('pause',()=>{
+    if(a!==listenAudio||S.audioEnded||a.ended) return;
+    $('#btnAudioStart').hidden=false;
+    $('#audioStatus').innerHTML='<span class="dot off"></span>Audio terhenti. Tekan tombol untuk melanjutkan.';
+  });
+  a.addEventListener('playing',()=>{
+    if(a!==listenAudio) return;
+    $('#btnAudioStart').hidden=true;
+    $('#audioStatus').innerHTML='<span class="dot"></span>Audio sedang diputar. Tidak bisa diulang.';
+  });
+  a.addEventListener('error',()=>{
+    $('#audioStatus').innerHTML='<span class="dot off"></span>File audio tidak ditemukan: '+esc(CONFIG.AUDIO.listening);
+  });
+  if(S.audioEnded){
+    $('#audioStatus').innerHTML='<span class="dot off"></span>Audio selesai. Kamu bisa lanjut ke Reading kapan saja.';
+    $('#audioFill').style.width='100%';
+    listenAudio=null; return;
+  }
+  if(resume && S.audioPos>0){
+    a.addEventListener('loadedmetadata',()=>{ try{a.currentTime=S.audioPos;}catch(e){} },{once:true});
+  }
+  playListening();
+}
+function playListening(){
+  if(!listenAudio) return;
+  listenAudio.play().catch(()=>{
+    $('#btnAudioStart').hidden=false;
+    $('#audioStatus').innerHTML='<span class="dot off"></span>Browser menahan pemutaran otomatis. Tekan tombol untuk memulai audio.';
+  });
+}
+function stopListening(){
+  if(listenAudio){ const a=listenAudio; listenAudio=null; a.pause(); a.removeAttribute('src'); a.load(); }
+  $('#audioBar').hidden=true;
+}
+
+/* =====================================================================
+   PENILAIAN
+   ===================================================================== */
+function isCorrect(no){
+  const q=QUESTIONS[no], a=S.answers[no];
+  if(q.type==='text') return null;
+  if(a==null||a==='') return false;
+  if(q.type==='chunks') return Array.isArray(a)&&a.length===q.chunks.length&&a.map(i=>q.chunks[i]).join('')===q.answer;
+  return a===KEY[no];
+}
+function answerText(no){
+  const q=QUESTIONS[no], a=S.answers[no];
+  if(a==null) return '';
+  if(q.type==='tf') return a==='T'?'√':'×';
+  if(q.type==='chunks') return a.map(i=>q.chunks[i]).join('');
+  return String(a);
+}
+function grade(){
+  const detail=range(1,100).map(no=>({no,ans:answerText(no),ok:isCorrect(no)}));
+  const cnt=(a,b)=>detail.filter(d=>d.no>=a&&d.no<=b&&d.ok===true).length;
+  const L={correct:cnt(1,45),total:45}; L.score=L.correct/45*100;
+  const R={correct:cnt(46,85),total:40}; R.score=R.correct/40*100;
+  const W={correct:cnt(86,95),total:10,max:75}; W.score=W.correct*CONFIG.W1_POINT;
+  return {L,R,W,detail,totalAuto:L.score+R.score+W.score,
+    manual:range(96,100).map(no=>({no,word:QUESTIONS[no].word,img:QUESTIONS[no].img,text:(S.answers[no]||'').trim()}))};
+}
+
+/* =====================================================================
+   SUBMIT
+   ===================================================================== */
+function submitExam(reason){
+  if(!S||S.finished) return;
+  S.finished=true;
+  clearInterval(timerHandle);
+  if(!$('#modal').hidden) closeModal(false);
+  stopListening();
+  try{localStorage.removeItem(LS_KEY);}catch(e){}
+  const g=grade();
+  const finishedAt=Math.min(Date.now(),S.endAt);
+  result={...g,reason,sessionId:S.id,name:S.name,date:S.date,startedAt:S.startedAt,finishedAt,
+          usedSec:Math.round((finishedAt-S.startedAt)/1000),answered:Object.keys(S.answers).filter(n=>isAnswered(+n)).length,section:S.section,sync:'pending'};
+  renderResult();
+  showScreen('result');
+  startResultMusic();
+  sendFinal();
+}
+
+/* =====================================================================
+   PANEL PENGAWAS (Google Sheets via Apps Script)
+   ===================================================================== */
+const iso=ms=>new Date(ms).toISOString();
+async function postSheet(payload){
+  if(!CONFIG.SHEET_URL) return {ok:false,reason:'no-url'};
+  const body=JSON.stringify(payload);
+  try{
+    const res=await fetch(CONFIG.SHEET_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body});
+    const j=await res.json();
+    return {ok:!!j.ok};
+  }catch(err){
+    try{
+      await fetch(CONFIG.SHEET_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body});
+      return {ok:true,uncertain:true};
+    }catch(err2){ return {ok:false,reason:'network'}; }
+  }
+}
+function sendProgress(status){
+  if(!S||!CONFIG.SHEET_URL) return;
+  postSheet({action:'upsert',sessionId:S.id,name:S.name,date:S.date,status,section:SECTIONS[S.section].label,
+    startedAt:iso(S.startedAt),answered:Object.keys(S.answers).filter(n=>isAnswered(+n)).length,final:false});
+}
+function finalPayload(){
+  const r=result;
+  return {action:'upsert',final:true,sessionId:r.sessionId,name:r.name,date:r.date,
+    status:r.reason==='timeout'?'Selesai (waktu habis)':'Selesai',
+    section:'Selesai',startedAt:iso(r.startedAt),finishedAt:iso(r.finishedAt),usedMin:Math.round(r.usedSec/6)/10,
+    answered:r.answered,
+    listening:{correct:r.L.correct,total:r.L.total,score:Math.round(r.L.score*10)/10},
+    reading:{correct:r.R.correct,total:r.R.total,score:Math.round(r.R.score*10)/10},
+    writing:{correct:r.W.correct,total:r.W.total,score:r.W.score,max:r.W.max},
+    totalAuto:Math.round(r.totalAuto*10)/10,
+    manual:r.manual.map(m=>m.text),
+    detail:r.detail};
+}
+async function sendFinal(){
+  const box=$('#syncBox');
+  if(!CONFIG.SHEET_URL){ result.sync='off'; paintSync(); return; }
+  result.sync='pending'; paintSync();
+  const r=await postSheet(finalPayload());
+  result.sync=r.ok?'ok':'fail'; paintSync();
+}
+function paintSync(){
+  const box=$('#syncBox'); if(!box||!result) return;
+  const m={
+    off:['off','Panel pengawas belum tersambung. Nilai hanya tampil di halaman ini.',false],
+    pending:['pending','Mengirim hasil ke panel pengawas…',false],
+    ok:['ok','Hasil sudah terkirim ke panel pengawas.',false],
+    fail:['fail','Hasil belum terkirim ke panel pengawas. Periksa koneksi internet.',true]
+  }[result.sync];
+  box.className='sync '+m[0];
+  box.innerHTML=`<span>${m[1]}</span>`+(m[2]?`<button type="button" class="btn btn-sm" id="btnResend">Kirim ulang</button>`:'');
+  const b=$('#btnResend'); if(b) b.onclick=sendFinal;
+}
+
+/* =====================================================================
+   5. HALAMAN NILAI
+   ===================================================================== */
+function renderResult(){
+  const r=result;
+  const reasonPill=r.reason==='timeout'?'<span class="pill timeout">Waktu habis, otomatis dikumpulkan</span>':'<span class="pill manual">Dikumpulkan manual</span>';
+  const row=(name,meta,score,max,extra='')=>`
+    <div class="score-row">
+      <div><div class="name">${name}</div><div class="meta">${meta}</div></div>
+      <div class="val">${fmt(score)}<small> / ${max}</small></div>
+      <div class="track"><i style="width:${score/max*100}%"></i></div>${extra}
+    </div>`;
+  const grid=r.detail.map(d=>`<button type="button" class="rg ${d.ok===true?'ok':d.ok===false?'no':'mn'}" data-no="${d.no}">${d.no}</button>`).join('');
+  $('#resultRoot').innerHTML=`
+    <header>
+      <h1>Hasil mocktest ${reasonPill}</h1>
+      <p>${esc(r.name)} · ${formatDateId(r.date)} · waktu terpakai ${mmss(r.usedSec)} (menit:detik) dari ${CONFIG.DURATION_MIN} menit</p>
+    </header>
+
+    <div class="sheet">
+      <h2>Nilai per bagian</h2>
+      ${row('Listening',`${r.L.correct} benar dari ${r.L.total} soal (1–45)`,r.L.score,100)}
+      ${row('Reading',`${r.R.correct} benar dari ${r.R.total} soal (46–85)`,r.R.score,100)}
+      ${row('Writing',`${r.W.correct} benar dari ${r.W.total} soal (86–95)`,r.W.score,r.W.max,
+        `<div class="note">Nomor 96–100 (maks ${CONFIG.W2_MAX} poin) dikoreksi manual oleh pengawas.</div>`)}
+      <div class="score-total">
+        <div class="lbl"><b>Jumlah nilai</b><span>Listening + Reading + Writing (86–95). Belum termasuk koreksi manual 96–100.</span></div>
+        <div class="num">${fmt(r.totalAuto)}<small> / 275</small></div>
+      </div>
+    </div>
+
+    <div class="sheet">
+      <h2>Jawaban nomor 96–100 (koreksi manual)</h2>
+      ${r.manual.map(m=>`
+        <div class="manual-item">
+          <figure><img src="${m.img}" alt="Gambar soal ${m.no}"></figure>
+          <div><div class="no">Soal ${m.no}</div><div class="w">Kata: <span class="zh" lang="zh">${esc(m.word)}</span></div>
+          <div class="ans${m.text?'':' empty'}" lang="zh">${m.text?esc(m.text):'Tidak dijawab'}</div></div>
+        </div>`).join('')}
+    </div>
+
+    <div class="sheet">
+      <h2>Rincian per nomor</h2>
+      <div class="grid-wrap">
+        <div class="rgrid" id="rgrid">${grid}</div>
+        <div class="legend"><span><i style="background:var(--jade)"></i>Benar</span><span><i style="background:var(--red)"></i>Salah / kosong</span><span><i style="background:#c99a2e"></i>Koreksi manual</span></div>
+        <p id="detailLine">Pilih nomor untuk melihat jawabanmu.</p>
+      </div>
+    </div>
+
+    <div class="sync pending" id="syncBox"></div>
+
+    <div class="result-actions">
+      <button type="button" class="btn" id="btnMusic">⏸ Jeda musik</button>
+      <button type="button" class="btn btn-primary btn-lg" id="btnRetry">Ulangi ujian</button>
+    </div>`;
+  paintSync();
+  $('#rgrid').addEventListener('click',e=>{
+    const b=e.target.closest('.rg'); if(!b) return;
+    $$('.rg.cur').forEach(x=>x.classList.remove('cur')); b.classList.add('cur');
+    const no=+b.dataset.no, d=r.detail[no-1], q=QUESTIONS[no];
+    let line;
+    if(d.ok===null) line=`No ${no}: dikoreksi manual.`;
+    else {
+      const key=q.type==='tf'?(KEY[no]==='T'?'√':'×'):q.type==='chunks'?KEY[no]:KEY[no];
+      line=`No ${no}: jawabanmu ${d.ans||'(kosong)'} · kunci ${key} · ${d.ok?'benar':'salah'}`;
+    }
+    $('#detailLine').textContent=line;
+  });
+  $('#btnRetry').onclick=retryExam;
+  $('#btnMusic').onclick=toggleMusic;
+}
+
+/* ---- musik halaman nilai ---- */
+const resultAudio=new Audio(CONFIG.AUDIO.result);
+resultAudio.loop=true;
+function startResultMusic(){
+  resultAudio.currentTime=0;
+  resultAudio.play().then(()=>setMusicBtn(true)).catch(()=>setMusicBtn(false));
+}
+function setMusicBtn(playing){ const b=$('#btnMusic'); if(b) b.textContent=playing?'⏸ Jeda musik':'▶ Putar musik'; }
+function toggleMusic(){
+  if(resultAudio.paused) resultAudio.play().then(()=>setMusicBtn(true)).catch(()=>{});
+  else { resultAudio.pause(); setMusicBtn(false); }
+}
+function retryExam(){
+  resultAudio.pause(); resultAudio.currentTime=0;
+  S=null; result=null;
+  $('#inName').value='';
+  profile={name:'',date:''};
+  showScreen('login');
+}
+
+/* =====================================================================
+   PEMULIHAN SESI (refresh / tab tertutup tak sengaja)
+   ===================================================================== */
+window.addEventListener('beforeunload',e=>{
+  if(S&&!S.finished&&$('#screen-exam').classList.contains('active')){ e.preventDefault(); e.returnValue=''; }
+});
+(function init(){
+  let saved=null;
+  try{ saved=JSON.parse(localStorage.getItem(LS_KEY)||'null'); }catch(e){}
+  if(!saved||saved.finished) return;
+  if(Date.now()>=saved.endAt){ S=saved; submitExam('timeout'); return; }
+  $('#resumeText').textContent=`Ujian atas nama ${saved.name} masih berjalan (sisa ${clock(saved.endAt-Date.now())}).`;
+  $('#resumeBox').hidden=false;
+  $('#btnResume').onclick=()=>{ S=saved; beginExamUI(true); };
+  $('#btnDiscard').onclick=()=>{ try{localStorage.removeItem(LS_KEY);}catch(e){} $('#resumeBox').hidden=true; };
+})();
+</script>
+</body>
+</html>
